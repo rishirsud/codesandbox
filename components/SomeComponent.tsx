@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from 'react';
-
-import '../styles/globals.css';
-import type { AppProps } from 'next/app';
-import { builder } from '@builder.io/react';
 import useBuilderModel from '../hooks/useBuilderModel';
+// import { useEffect } from 'react';
 
-builder.init('');
-
-function MyApp() {
+export default function SomeComponent() {
   const [headerItems, setHeaderItems] = useState([]);
   const [hamburger, setHamburger] = useState([]);
 
@@ -25,7 +20,7 @@ function MyApp() {
   const { loading: hamburgerLoading, data: hamburgerData } = useBuilderModel(
     'navigation',
     'Hamburger Navigation',
-    0
+    500
   );
   useEffect(() => {
     if (!hamburgerLoading) {
@@ -33,11 +28,21 @@ function MyApp() {
     }
   }, [hamburgerLoading, hamburgerData]);
 
+  const mapNames = (arr) => {
+    return arr?.map((item: any, index: number) => {
+      return <li key={index}>{item?.displayName}</li>;
+    });
+  };
+
   return (
     <div>
-      <p>Look in the console</p>
+      <div>
+        <h1>Nav Items</h1>
+        <ul>{headerItems}</ul>
+      </div>
+      <div>
+        <h1>Hamburger Items</h1>
+      </div>
     </div>
   );
 }
-
-export default MyApp;
